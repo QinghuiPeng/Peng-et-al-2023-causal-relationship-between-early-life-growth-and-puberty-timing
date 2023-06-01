@@ -1,0 +1,35 @@
+### MR analyses ###
+library(devtools)
+library(TwoSampleMR)
+
+## Outcome --> puberty timing (Day, 2017) ##
+# Liberal analysis (exposure_birth weight) two-sample MR #
+BW_exp1<-read_exposure_data(filename = 'fetalIV1-exp.txt' ,clump = FALSE, sep= "\t", snp_col = "SNP", beta_col = "beta", se_col = "se", effect_allele_col ="A1", other_allele_col = "A2", eaf_col = "eaf", pval_col = "pval", samplesize_col = "n" )
+BW_exp <- clump_data(BW_exp1, clump_r2=0.001, clump_kb=10000)
+menarche_out <-read_outcome_data(filename = "fetalIV1-out.txt", snps = BW_exp$SNP, sep = "\t", phenotype_col = "Phenotype", snp_col = "SNP", beta_col = "beta", se_col = "se", eaf_col = "eaf", effect_allele_col = "A1", other_allele_col = "A2", pval_col = "pval")
+mydata<-harmonise_data(exposure_dat=BW_exp, outcome_dat=menarche_out, action= 2)
+mr_results <- mr(mydata, parameters =default_parameters(), method_list=c('mr_ivw_mre', 'mr_egger_regression', 'mr_weighted_median'))
+mr_results
+
+# Conservative analysis (exposure_birth weight) two-sample MR #
+BW_exp1<-read_exposure_data(filename = 'fetalIV2-exp.txt' ,clump = FALSE, sep= "\t", snp_col = "SNP", beta_col = "beta", se_col = "se", effect_allele_col ="A1", other_allele_col = "A2", eaf_col = "eaf", pval_col = "pval", samplesize_col = "n" )
+BW_exp <- clump_data(BW_exp1, clump_r2=0.001, clump_kb=10000)
+mydata<-harmonise_data(exposure_dat=BW_exp, outcome_dat=menarche_out, action= 2)
+mr_results <- mr(mydata, parameters =default_parameters(), method_list=c('mr_ivw_mre', 'mr_egger_regression', 'mr_weighted_median'))
+mr_results
+
+## Outcome --> puberty timing (Day, 2017) ##
+# Liberal analysis (exposure_childhood BMI) two-sample MR #
+CBMI_exp1<-read_exposure_data(filename = 'CBMIIV1-exp.txt' ,clump = FALSE, sep= "\t", snp_col = "SNP", beta_col = "beta", se_col = "se", effect_allele_col ="A1", other_allele_col = "A2", eaf_col = "eaf", pval_col = "pval", samplesize_col = "n" )
+CBMI_exp <- clump_data(CBMI_exp1, clump_r2=0.001, clump_kb=10000)
+menarche_out <-read_outcome_data(filename = "CBMIIV1-out.txt", snps = CBMI_exp$SNP, sep = "\t", phenotype_col = "Phenotype", snp_col = "SNP", beta_col = "beta", se_col = "se", eaf_col = "eaf", effect_allele_col = "A1", other_allele_col = "A2", pval_col = "pval")
+mydata<-harmonise_data(exposure_dat=CBMI_exp, outcome_dat=menarche_out, action= 2)
+mr_results <- mr(mydata, parameters =default_parameters(), method_list=c('mr_ivw_mre', 'mr_egger_regression', 'mr_weighted_median'))
+mr_results
+
+# Conservative analysis (exposure_ childhood BMI) two-sample MR #
+CBMI_exp1<-read_exposure_data(filename = 'CBMIIV2-exp.txt' ,clump = FALSE, sep= "\t", snp_col = "SNP", beta_col = "beta", se_col = "se", effect_allele_col ="A1", other_allele_col = "A2", eaf_col = "eaf", pval_col = "pval", samplesize_col = "n" )
+CBMI_exp <- clump_data(CBMI_exp1, clump_r2=0.001, clump_kb=10000)
+mydata<-harmonise_data(exposure_dat=CBMI_exp, outcome_dat=menarche_out, action= 2)
+mr_results <- mr(mydata, parameters =default_parameters(), method_list=c('mr_ivw_mre', 'mr_egger_regression', 'mr_weighted_median'))
+mr_results

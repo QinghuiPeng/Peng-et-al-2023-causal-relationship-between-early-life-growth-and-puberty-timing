@@ -1,0 +1,54 @@
+### MR-Cluster analyses ###
+library(mrclust)
+
+## Outcome --> puberty timing (Day, 2017) ##
+# MR-Cluster analysis (exposure_birth weight) #
+data1 <-read.table("MRcluster.txt", header=T)
+rsid = data1$rsid
+bx = data1$bx
+bxse = data1$bxse
+by = data1$by
+byse = data1$byse
+ratio_est = by/bx
+ratio_est_se = byse/abs(bx)
+#Running an MR-Clust analysis 
+res_em = mr_clust_em(theta = ratio_est, theta_se = ratio_est_se, bx = bx, by = by, bxse = bxse, byse = byse, obs_names = rsid)
+names(res_em)
+##Allocation probabilities and the best clustering of the data##
+names(res_em$results)
+head(res_em$results$all,n=24)  # allocated to "all" clusters 
+head(res_em$results$best,n=24)  # allocated to the "best" cluster
+#Identified clusters
+clusters = unique(res_em$results$best$cluster_class); # same answer if we type
+clusters[order(clusters)]
+#number of clusters K
+K = length(clusters)
+K
+##Summarising variants by allocation probability within each cluster##
+names(res_em$cluster_membership)
+head(res_em$cluster_membership$cluster_1)
+#Variants assigned to cluster one with probability >0.9 
+res_em$cluster_membership$cluster_1$pr_range_1_to_0.9
+##Plotting results##
+plot_bw_best = res_em$plots$two_stage +
+  ggplot2::xlim(0, max(abs(bx) + 2*bxse)) +
+  ggplot2::xlab("Genetic association with bw") +
+  ggplot2::ylab("Genetic association with pt") +
+  ggplot2::ggtitle("")
+plot_bw_best
+# Variants allocated to clusters with: (i) at least 4 variants and; (ii)
+# allocation probability >=0.
+#Update summary effects using the prioritised set of variants
+res80 = mrclust::pr_clust(dta = res_em$results$best, prob = 0.8, min_obs =  4)
+keep80 = which(rsid %in% res80$observation)
+bx80   = bx[keep80]
+bxse80 = bxse[keep80]
+by80   = by[keep80]
+byse80 = byse[keep80]
+rsid80 = rsid[keep80]
+plot.bw.pr80 = two_stage_plot(res = res80, bx = bx80, by = by80, bxse = bxse80, byse = byse80, obs_names = rsid80) + 
+  ggplot2::xlim(0, max(abs(bx80) + 2*bxse80)) + 
+  ggplot2::xlab("Genetic association with bw") + 
+  ggplot2::ylab("Genetic association with pt") + 
+  ggplot2::ggtitle("");
+plot.bw.pr80
