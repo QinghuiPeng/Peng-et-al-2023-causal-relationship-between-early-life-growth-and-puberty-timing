@@ -6,9 +6,13 @@ R package to generate results as per Peng et al,. 2023, Deciphering the causal r
 
 ## Analysis steps
 1.Data pre-processing for birth weight and childhood body mass index and puberty timing.
+
 2.Two-sampe MR: exposure: birth weight or childhood body mass index; outcome: puberty timing.
+
 3.Two-step MR: exposure: birth weight; outcome: puberty timing; mediator: adulthood BMI.
+
 4.MVMR: exposure: birth weight and childhood body mass index; outcome: puberty timing.
+
 5.MR-Cluster: exposure: birth weight; outcome: puberty timing.
 
 ## Data sources
