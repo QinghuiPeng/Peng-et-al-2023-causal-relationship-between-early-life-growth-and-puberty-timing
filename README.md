@@ -1,8 +1,8 @@
-# Peng-et-al-2023-causal-relationship-between-early-life-growth-and-puberty-timing
-We used MR approaches to examine the causal relationships between birth weight (BW), childhood body mass index (BMI), and puberty timing (PT) and the potential mediating role of childhood BMI in the causal pathway.
+# Fetal genetically determined birth weight on puberty timing: a two-sample MR analysis
+We used Mendelian randomization (MR) analyses to explore the causal relationships between fetal genetically determined birth weight (BW), childhood body mass index (BMI), and puberty timing (PT) and the potential mediating role of childhood BMI.
 
 ## Environment details
-R package to generate results as per Peng et al,. 2023, Deciphering the causal relationship between early-life growth and puberty timing: a Mendelian randomization study
+R package to generate results as per Peng et al,. 2023, Fetal genetically determined birth weight plays a causal role in earlier puberty timing: evidence from human genetic studies.
 
 ## Data sources
 Data for BW and childhood BMI can be found at the following website: EGG Consortium http://egg-consortium.org/. Summary data on PT can be obtained from ReproGen Consortium https://reprogen.org/data_download.html.
